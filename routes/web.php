@@ -17,21 +17,27 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 
-$router->group(['prefix' => 'series'], function () use ($router) {
-    $router->get('', 'SeriesController@index');
-    $router->post('', 'SeriesController@store');
-    $router->get('{id}', 'SeriesController@show');
-    $router->put('{id}', 'SeriesController@update');
-    $router->delete('{id}', 'SeriesController@update');
+// TODO Middleware o uso de autenticadores, neste caso o JWT encontrado no AuthServiceProvider
+$router->group(['middleware' => 'autenticador'], function() use ($router){
 
-    $router->get('{serie_id}/episodio', 'EpisodiosController@buscaPorSerie');
+    $router->group(['prefix' => 'series'], function () use ($router) {
+        $router->get('', 'SeriesController@index');
+        $router->post('', 'SeriesController@store');
+        $router->get('{id}', 'SeriesController@show');
+        $router->put('{id}', 'SeriesController@update');
+        $router->delete('{id}', 'SeriesController@update');
 
+        $router->get('{serie_id}/episodio', 'EpisodiosController@buscaPorSerie');
+
+    });
+
+    $router->group(['prefix' => 'episodios'], function () use ($router) {
+        $router->get('', 'EpisodiosController@index');
+        $router->post('', 'EpisodiosController@store');
+        $router->get('{id}', 'EpisodiosController@show');
+        $router->put('{id}', 'EpisodiosController@update');
+        $router->delete('{id}', 'EpisodiosController@update');
+    });
 });
 
-$router->group(['prefix' => 'episodios'], function () use ($router) {
-    $router->get('', 'EpisodiosController@index');
-    $router->post('', 'EpisodiosController@store');
-    $router->get('{id}', 'EpisodiosController@show');
-    $router->put('{id}', 'EpisodiosController@update');
-    $router->delete('{id}', 'EpisodiosController@update');
-});
+$router->post('login', 'TokenController@gerartoken');

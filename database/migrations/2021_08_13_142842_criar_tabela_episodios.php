@@ -21,9 +21,9 @@ class CriarTabelaEpisodios extends Migration
             $table->integer('serie_id')->unsigned();
         });
 
-        Schema::table('episodios', function ($table) {
-            $table->foreign('serie_id')->references('id')->on('series');
-        });
+        // Schema::table('episodios', function ($table) {
+        //     $table->foreign('serie_id')->references('id')->on('series');
+        // });
 
     }
 
