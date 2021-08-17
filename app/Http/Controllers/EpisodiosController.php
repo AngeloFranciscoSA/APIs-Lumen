@@ -18,6 +18,6 @@ class EpisodiosController extends BaseController
         ->where('serie_id', $serie_id)
         ->get();
 
-        return $episodios
+        return $episodios;
     }
 }
