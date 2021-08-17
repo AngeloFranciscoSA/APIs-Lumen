@@ -9,9 +9,9 @@ abstract class BaseController
 
     protected $classe;
 
-    public function index()
+    public function index(Request $req)
     {
-        return $this->classe::all();
+        return $this->classe::paginate($req->per_page);
     }
 
     public function store(Request $req)

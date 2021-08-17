@@ -11,4 +11,13 @@ class EpisodiosController extends BaseController
     {
         $this->classe = Episodio::class;
     }
+
+
+    public function buscaPorSerie(int $serie_id){
+        $episodios = Episodio::query()
+        ->where('serie_id', $serie_id)
+        ->get();
+
+        return $episodios
+    }
 }

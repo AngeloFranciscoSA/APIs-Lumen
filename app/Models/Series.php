@@ -7,9 +7,18 @@ class Series extends Model
 {
     public $timestamps = false;
     protected $fillable = ['nome'];
+    protected $appends = ['links'];
 
     public function episodios()
     {
         return $this->hasMany(Episodio::class);
+    }
+
+    public function getLinksAttribute($links): array
+    {
+        return [
+            'self' => 'series/'. $this->id,
+            'episodios' => '/series/'. $this->id . '/episodios'
+        ];
     }
 }
